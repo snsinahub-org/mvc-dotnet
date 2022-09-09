@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v3
+        with:
+          ref: add-project
 
       - name: install dotnet
         uses: actions/setup-dotnet@v2
