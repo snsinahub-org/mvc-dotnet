@@ -22,7 +22,7 @@ jobs:
 
       - name: build
         run: |
-          Remove-Item -Recurse -Force -Path c:/ws/hw/*
+          Remove-Item -Recurse -Force -Path "c:\ws\hw\*"
           dotnet restore
           dotnet build --configuration Release
         shell: powershell
@@ -36,7 +36,7 @@ jobs:
       - name: publish and deploy to IIS
         run: |          
           dotnet publish -c Release -o myapp4
-          copy-item -Recurse -Force .\myapp4\* c:/ws/hw
+          copy-item -Recurse -Force .\myapp4\* "c:\ws\hw"
         shell: powershell
 
       - name: stop iis server
