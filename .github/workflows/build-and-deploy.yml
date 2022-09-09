@@ -24,7 +24,7 @@ jobs:
           dotnet restore
           dotnet build --configuration Release
         shell: powershell
-        
+
       - name: checkout code
         uses: actions/checkout@v3
         with:
@@ -41,7 +41,7 @@ jobs:
           copy-item -Recurse -Force .\myapp4\* "c:\ws\hw"
         shell: powershell
 
-      - name: stop iis server
+      - name: start iis server
         run: iisreset /start
         shell: powershell
 
