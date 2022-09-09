@@ -1,0 +1,50 @@
+name: build-and-deply
+
+on: 
+  workflow_dispatch:
+
+env: 
+  DEPLOY_PATH: 'c:/ws/hw'
+
+
+jobs:
+  build_and_deply:
+    runs-on: [self-hosted, comva]
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: install dotnet
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: build
+        run: |
+          dotnet restore
+           dotnet build --configuration Release
+        shell: powershell
+      
+      # Remote connection to server via powershell
+      # https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting?view=powershell-7.2
+      - name: stop iis server
+        run: iisreset /stop
+        shell: powershell
+
+      - name: publish and deploy to IIS
+        run: |
+          Remove-Item -Recurse -Force $DEPLOY_PATH/*
+          dotnet publish -c Release -o myapp4
+          copy-item -Recurse -Force .\myapp4\* $DEPLOY_PATH
+        shell: powershell
+
+      - name: stop iis server
+        run: iisreset /start
+        shell: powershell
+
+
+
+
+
+
