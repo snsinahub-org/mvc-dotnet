@@ -2,6 +2,14 @@ name: build-and-deply
 
 on: 
   workflow_dispatch:
+    inputs:
+      env_name:
+        type: choice
+        required: true
+        options:
+          - DEV
+          - PROD
+
 
 env: 
   DEPLOY_PATH: 'c:/ws/hw'
@@ -10,36 +18,39 @@ env:
 jobs:
   build_and_deply:
     runs-on: [self-hosted, comva]
+    environment: ${{ github.event.inputs.env_name }}
 
     steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-
-      - name: install dotnet
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '6.0.x'
-
-      - name: build
-        run: |
-          Remove-Item -Recurse -Force -Path "c:\ws\hw\*"
-          dotnet restore
-          dotnet build --configuration Release
-        shell: powershell
-      
       # Remote connection to server via powershell
       # https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting?view=powershell-7.2
       - name: stop iis server
         run: iisreset /stop
         shell: powershell
 
+      - name: build
+        run: |
+          Remove-Item -Recurse -Force -Path "${{ secrets.DEPLOY_PATH }}\*"
+          dotnet restore
+          dotnet build --configuration Release
+        shell: powershell
+
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: add-project
+
+      - name: install dotnet
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'              
+
       - name: publish and deploy to IIS
         run: |          
           dotnet publish -c Release -o myapp4
-          copy-item -Recurse -Force .\myapp4\* "c:\ws\hw"
+          copy-item -Recurse -Force .\myapp4\* "${{ secrets.DEPLOY_PATH }}"
         shell: powershell
 
-      - name: stop iis server
+      - name: start iis server
         run: iisreset /start
         shell: powershell
 
