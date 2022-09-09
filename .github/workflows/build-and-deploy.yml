@@ -22,8 +22,9 @@ jobs:
 
       - name: build
         run: |
+          Remove-Item -Recurse -Force -Path $DEPLOY_PATH
           dotnet restore
-           dotnet build --configuration Release
+          dotnet build --configuration Release
         shell: powershell
       
       # Remote connection to server via powershell
@@ -33,8 +34,7 @@ jobs:
         shell: powershell
 
       - name: publish and deploy to IIS
-        run: |
-          Remove-Item -Recurse -Force $DEPLOY_PATH/*
+        run: |          
           dotnet publish -c Release -o myapp4
           copy-item -Recurse -Force .\myapp4\* $DEPLOY_PATH
         shell: powershell
