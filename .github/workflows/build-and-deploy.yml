@@ -2,13 +2,6 @@ name: build-and-deply
 
 on: 
   workflow_dispatch:
-    inputs:
-      env_name:
-        type: choice
-        required: true
-        options:
-          - DEV
-          - PROD
 
 
 env: 
@@ -17,27 +10,22 @@ env:
 
 jobs:
   build_and_deply:
-    runs-on: [self-hosted, comva]
-    environment: ${{ github.event.inputs.env_name }}
+    runs-on: [self-hosted, win-test-runner-1]
 
     steps:
-      # Remote connection to server via powershell
-      # https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting?view=powershell-7.2
       - name: stop iis server
         run: iisreset /stop
         shell: powershell
 
       - name: build
         run: |
-          Remove-Item -Recurse -Force -Path "${{ secrets.DEPLOY_PATH }}\*"
+          Remove-Item -Recurse -Force -Path "C:\website\mvc\*"
           dotnet restore
           dotnet build --configuration Release
         shell: powershell
 
       - name: checkout code
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
 
       - name: install dotnet
         uses: actions/setup-dotnet@v2
@@ -47,7 +35,7 @@ jobs:
       - name: publish and deploy to IIS
         run: |          
           dotnet publish -c Release -o myapp4
-          copy-item -Recurse -Force .\myapp4\* "${{ secrets.DEPLOY_PATH }}"
+          copy-item -Recurse -Force .\myapp4\* "C:\website\mvc\"
         shell: powershell
 
       - name: start iis server
