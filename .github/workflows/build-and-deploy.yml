@@ -26,6 +26,11 @@ jobs:
       - name: stop iis server
         run: iisreset /stop
         shell: powershell
+        
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
 
       - name: build
         run: |
@@ -34,10 +39,7 @@ jobs:
           dotnet build --configuration Release
         shell: powershell
 
-      - name: checkout code
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+      
 
       - name: install dotnet
         uses: actions/setup-dotnet@v2
