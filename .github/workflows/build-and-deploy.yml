@@ -41,10 +41,10 @@ jobs:
 
       
 
-      - name: install dotnet
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '6.0.x'              
+      # - name: install dotnet
+      #  uses: actions/setup-dotnet@v2
+      #  with:
+      #    dotnet-version: '6.0.x'              
 
       - name: publish and deploy to IIS
         run: |          
