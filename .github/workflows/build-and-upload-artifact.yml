@@ -1,0 +1,56 @@
+name: build-and-deply
+
+on: 
+  workflow_dispatch:
+    inputs:
+      env_name:
+        type: choice
+        required: true
+        options:
+          - DEV
+          - PROD
+
+
+env: 
+  DEPLOY_PATH: 'c:/ws/hw'
+
+
+jobs:
+  build_and_deply:
+    runs-on: windows-latest
+    environment: ${{ github.event.inputs.env_name }}
+
+    steps:
+      # Remote connection to server via powershell
+      # https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting?view=powershell-7.2
+      
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: build
+        run: |          
+          dotnet restore
+          dotnet build --configuration Release
+        shell: powershell
+
+      
+
+             
+
+      - name: publish and deploy to IIS
+        run: |          
+          dotnet publish -c Release -o myapp4
+          copy-item -Recurse -Force .\myapp4\* "${{ secrets.DEPLOY_PATH }}"
+        shell: powershell
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: myapp4
+          path: myapp4
+
+
+
+
+
