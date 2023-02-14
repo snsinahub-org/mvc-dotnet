@@ -34,9 +34,10 @@ jobs:
 
       - name: build
         run: |
-          Remove-Item -Recurse -Force -Path "${{ secrets.DEPLOY_PATH }}\*"
           dotnet restore
           dotnet build --configuration Release
+#          Remove-Item -Recurse -Force -Path "${{ secrets.DEPLOY_PATH }}\*"
+          
         shell: powershell
 
       
