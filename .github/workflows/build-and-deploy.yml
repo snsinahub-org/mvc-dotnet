@@ -17,7 +17,7 @@ env:
 
 jobs:
   build_and_deply:
-    runs-on: [self-hosted, server-machine]
+    runs-on: windows-latest
     environment: ${{ github.event.inputs.env_name }}
 
     steps:
