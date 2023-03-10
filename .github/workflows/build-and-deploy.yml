@@ -51,14 +51,14 @@ jobs:
         run: |          
           dotnet publish -c Release -o myapp4
           # Get-ChildItem -Path myapp4\* -Recurse |
-          Compress-Archive -Path myapp4\* -DestinationPath C:\myapp4.zip    
+          Compress-Archive -Path myapp4\* -DestinationPath myapp4.zip    
           
         shell: powershell
         
       - name: publish to remote server
         uses: snsinahub-org/iis-webdeploy@development
         with:
-          source: 'C:\myapp4.zip'
+          source: 'myapp4.zip'
           destination: 'C:\ws\hw-sam'
           remote_url: 'https://192.168.1.158:8172/msdeploy.axd?site=hw-dev'
           username: ${{ secrets.USERNAME }}
