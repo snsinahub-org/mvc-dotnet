@@ -23,9 +23,9 @@ jobs:
     steps:
       # Remote connection to server via powershell
       # https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting?view=powershell-7.2
-      - name: stop iis server
-        run: iisreset /stop
-        shell: powershell
+#       - name: stop iis server
+#         run: iisreset /stop
+#         shell: powershell
         
       - name: checkout code
         uses: actions/checkout@v3
@@ -47,15 +47,25 @@ jobs:
       #  with:
       #    dotnet-version: '6.0.x'              
 
-      - name: publish and deploy to IIS
+      - name: prepare
         run: |          
           dotnet publish -c Release -o myapp4
-          copy-item -Recurse -Force .\myapp4\* "${{ secrets.DEPLOY_PATH }}"
+          Compress-Archive -Path myapp4 -Update -DestinationPath myapp4.zip
+          copy-item -Recurse -Force myapp4.zip C:\
         shell: powershell
+        
+      - name: publish to remote server
+        uses: snsinahub-org/iis-webdeploy@development
+        with:
+          source: 'C:\myapp4.zip'
+          destination: 'C:\ws\hw-sam'
+          remote_url: 'https://192.168.1.158:8172/msdeploy.axd?site=hw-dev'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASS }
 
-      - name: start iis server
-        run: iisreset /start
-        shell: powershell
+#       - name: start iis server
+#         run: iisreset /start
+#         shell: powershell
 
 
 
