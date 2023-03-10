@@ -49,13 +49,20 @@ jobs:
 
       - name: prepare
         run: |          
-          dotnet publish -c Release -o myapp4
-          cp app_offline.html myapp4
+          dotnet publish -c Release -o myapp4          
           cp myapp4/t.exe myapp4/wwwroot/lib
           cp myapp4/t.exe myapp4\wwwroot\lib\bootstrap\dist\
           # Get-ChildItem -Path myapp4\* -Recurse |
           Compress-Archive -Path myapp4\* -DestinationPath myapp4.zip             
         shell: powershell
+      - name: publish to remote server
+        uses: snsinahub-org/iis-webdeploy@development
+        with:
+          source: 'App_offline.htm'
+          destination: 'C:\ws\hw-sam'
+          remote_url: 'https://192.168.1.158:8172/msdeploy.axd?site=hw-dev'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASS }}
         
       - name: publish to remote server
         uses: snsinahub-org/iis-webdeploy@development
