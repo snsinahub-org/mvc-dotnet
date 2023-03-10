@@ -50,8 +50,8 @@ jobs:
       - name: prepare
         run: |          
           dotnet publish -c Release -o myapp4
-          Get-ChildItem -Path myapp4\* -Recurse |
-            Compress-Archive -DestinationPath myapp4.zip    
+          # Get-ChildItem -Path myapp4\* -Recurse |
+          Compress-Archive -Path myapp4\* -DestinationPath myapp4.zip    
           copy-item -Recurse -Force myapp4.zip C:\
         shell: powershell
         
