@@ -50,7 +50,7 @@ jobs:
       - name: prepare
         run: |          
           dotnet publish -c Release -o myapp4
-          Compress-Archive -Path myapp4 -Update -DestinationPath myapp4.zip
+          Compress-Archive -Path myapp4\* -Update -DestinationPath myapp4.zip
           copy-item -Recurse -Force myapp4.zip C:\
         shell: powershell
         
