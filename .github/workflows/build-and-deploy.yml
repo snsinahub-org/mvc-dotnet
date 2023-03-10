@@ -1,4 +1,4 @@
-name: build-and-deply
+name: web deploy
 
 on: 
   workflow_dispatch:
@@ -17,7 +17,7 @@ env:
 
 jobs:
   build_and_deply:
-    runs-on: [self-hosted, iis]
+    runs-on: [self-hosted, webdeploy]
   #  environment: ${{ github.event.inputs.env_name }}
 
     steps:
