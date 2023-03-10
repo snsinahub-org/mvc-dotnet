@@ -17,8 +17,8 @@ env:
 
 jobs:
   build_and_deply:
-    runs-on: [self-hosted, webdeploy]
-  #  environment: ${{ github.event.inputs.env_name }}
+    runs-on: [self-hosted, wiis]
+
 
     steps:
       # Remote connection to server via powershell
