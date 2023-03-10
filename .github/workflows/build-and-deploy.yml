@@ -61,7 +61,7 @@ jobs:
           destination: 'C:\ws\hw-sam'
           remote_url: 'https://192.168.1.158:8172/msdeploy.axd?site=hw-dev'
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASS }
+          password: ${{ secrets.PASS }}
 
 #       - name: start iis server
 #         run: iisreset /start
