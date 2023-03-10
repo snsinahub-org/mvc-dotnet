@@ -60,7 +60,7 @@ jobs:
         uses: snsinahub-org/iis-webdeploy@development
         with:
           source: 'App_offline.htm.zip'
-          destination: 'C:\ws\hw-sam'
+          destination: 'C:\ws\hw-sam\App_offline.htm'
           remote_url: 'https://192.168.1.158:8172/msdeploy.axd?site=hw-dev'
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASS }}
