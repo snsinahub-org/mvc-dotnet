@@ -21,11 +21,9 @@ jobs:
         run: |
           dotnet restore
           dotnet build --configuration Release --no-restore
-        shell: powershell
         
       - name: test
         run: |
           dotnet test --no-restore --verbosity normal
-        shell: powershell
 
       
