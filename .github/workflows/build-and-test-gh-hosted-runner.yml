@@ -1,4 +1,4 @@
-name: GH runner Build and release
+name: GH runner Build and test
 
 on: 
   workflow_dispatch:
