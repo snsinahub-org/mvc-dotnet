@@ -1,4 +1,4 @@
-name: Build and release
+name: Self hosted Build and test
 
 on: 
   workflow_dispatch:
