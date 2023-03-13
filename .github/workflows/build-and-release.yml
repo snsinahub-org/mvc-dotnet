@@ -45,4 +45,7 @@ jobs:
           create-release: 'yes'
           files: |
             myapp4.zip
+      - name: print version number
+        run: |
+          echo "New release: ${{ steps.semver.outputs.version }}" >> $GITHUB_STEP_SUMMARY
       
