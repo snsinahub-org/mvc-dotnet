@@ -33,7 +33,7 @@ jobs:
         with:
           source: 'App_offline.htm.zip'
           destination: 'C:\ws\hw-sam\App_offline.htm'
-          remote_url: 'https://192.168.1.159:8172/msdeploy.axd?site=hw-dev'
+          remote_url: 'https://192.168.1.161:8172/msdeploy.axd?site=hw-dev'
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASS }}
         
