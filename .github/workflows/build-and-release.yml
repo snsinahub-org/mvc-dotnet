@@ -13,7 +13,8 @@ on:
           - PATCH
 jobs:
   build_and_release:
-    runs-on: [self-hosted, wiis]
+   # runs-on: [self-hosted, wiis]
+    runs-on: windows-latest
 
 
     steps:              
