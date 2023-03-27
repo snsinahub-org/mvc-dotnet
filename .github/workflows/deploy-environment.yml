@@ -36,7 +36,7 @@ jobs:
         uses: snsinahub-org/iis-webdeploy@development
         with:
           source: 'App_offline.htm.zip'
-          destination: "${{ vars.DEPLOY_PATH }}/${{ vars.DEPLOY_PATH_OFFLINE }}"
+          destination: "${{ vars.DEPLOY_PATH }}${{ vars.DEPLOY_PATH_OFFLINE }}"
           remote_url: "${{ vars.REMOTE_ADDRESS }}/msdeploy.axd?site=${{ vars.WS_NAME }}"
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASS }}
