@@ -32,8 +32,8 @@ jobs:
         uses: snsinahub-org/iis-webdeploy@development
         with:
           source: 'App_offline.htm.zip'
-          destination: 'C:\ws\hw-sam\App_offline.htm'
-          remote_url: 'https://192.168.1.161:8172/msdeploy.axd?site=hw-dev'
+          destination: "${{ vars.DEPLOY_PATH }}/${{ vars.DEPLOY_PATH_OFFLINE }}"
+          remote_url: "${{ vars.REMOTE_ADDRESS }}/msdeploy.axd?site=${{ vars.WS_NAME }}"
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASS }}
         
@@ -41,8 +41,8 @@ jobs:
         uses: snsinahub-org/iis-webdeploy@development
         with:
           source: 'myapp4.zip'
-          destination: 'C:\ws\hw-sam'
-          remote_url: 'https://192.168.1.161:8172/msdeploy.axd?site=hw-dev'
+          destination: "${{ vars.DEPLOY_PATH }}"
+          remote_url: "${{ vars.REMOTE_ADDRESS }}/msdeploy.axd?site=${{ vars.WS_NAME }}"
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASS }}
 
