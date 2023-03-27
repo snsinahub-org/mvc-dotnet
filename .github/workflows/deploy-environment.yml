@@ -21,7 +21,7 @@ jobs:
           ref: ${{ github.ref }}
       - name: print
         run: |
-          echo ${{ vars.REMOTE_ADDRESS }}/msdeploy.axd?site=${{ vars.WS_NAME }}"
+          echo "${{ vars.REMOTE_ADDRESS }}/msdeploy.axd?site=${{ vars.WS_NAME }}"
         shell: powershell
 
       - uses: robinraju/release-downloader@v1.7
