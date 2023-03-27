@@ -1,4 +1,4 @@
-name: [Deploy] envrionment based deploy from release
+name: "[Deploy] envrionment based deploy from release"
 
 on: 
   workflow_dispatch:
