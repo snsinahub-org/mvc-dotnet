@@ -1,0 +1,50 @@
+name: [Deploy] envrionment based deploy from release
+
+on: 
+  workflow_dispatch:
+    inputs:
+      version:        
+        required: true
+        default: v1.1.0
+      environment:
+        required: true
+        default: DEV
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, wiis]
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: robinraju/release-downloader@v1.7
+        with:
+          tag: ${{ github.event.inputs.version }}
+          fileName: "myapp4.zip"          
+      - name: prepare
+        run: |          
+          Compress-Archive -Path App_offline.htm -DestinationPath App_offline.htm.zip
+        shell: powershell
+      - name: publish to remote server
+        uses: snsinahub-org/iis-webdeploy@development
+        with:
+          source: 'App_offline.htm.zip'
+          destination: 'C:\ws\hw-sam\App_offline.htm'
+          remote_url: 'https://192.168.1.161:8172/msdeploy.axd?site=hw-dev'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASS }}
+        
+      - name: publish to remote server
+        uses: snsinahub-org/iis-webdeploy@development
+        with:
+          source: 'myapp4.zip'
+          destination: 'C:\ws\hw-sam'
+          remote_url: 'https://192.168.1.161:8172/msdeploy.axd?site=hw-dev'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASS }}
+
+
+
