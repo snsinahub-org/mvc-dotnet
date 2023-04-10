@@ -28,7 +28,7 @@ jobs:
         
       - name: test
         run: |
-          dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+          dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test-results.trx"
           ls -lthra
 
       
