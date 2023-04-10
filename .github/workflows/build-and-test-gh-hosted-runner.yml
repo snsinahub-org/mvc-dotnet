@@ -38,5 +38,10 @@ jobs:
           ls -lthra
           echo '-----------'
           tree
-
+      - name: Test reporter
+        uses: dorny/test-reporter@v1
+        with:
+          name: Test run for dotnet
+          path: TestResults/test-results.trx
+          reporter: dotnet-trx
       
