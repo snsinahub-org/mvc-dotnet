@@ -17,7 +17,8 @@ env:
 
 jobs:
   build_and_deply:
-    runs-on: [self-hosted, wiis]
+    # runs-on: [self-hosted, wiis]
+    runs-on: windows-latest
 
 
     steps:
